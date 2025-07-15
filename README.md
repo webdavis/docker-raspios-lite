@@ -46,3 +46,22 @@ hadolint Dockerfile
 Configuration is defined in the [.hadolint.yaml](./.hadolint.yaml) file at the root of the
 project.
 
+## Local Builds
+
+To build the images locally use the [`docker-wrapper.sh`](./docker-wrapper.sh) script:
+
+```bash
+./docker-wrapper.sh
+```
+
+To list all of the project image architectures run:
+
+```bash
+./docker-wrapper.sh -p
+```
+
+To list all of the project image architectures stored on Docker Hub run:
+
+```bash
+./docker-wrapper.sh -r
+```
