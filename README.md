@@ -1,6 +1,18 @@
+<p align="center">
+    <img src="./images/repo-icon.jpg" alt="Repo Icon" width="400" height="400">
+</p>
+
 # docker-raspios-lite
 
-Raspberry Pi OS Lite Docker images hosted on [Docker Hub](https://hub.docker.com/).
+This project builds and publishes Docker images for Raspberry Pi OS Lite on [Docker Hub](https://hub.docker.com/).
+
+## Supported Architectures
+
+| Architecture   | Raspberry Pi OS Lite Variant | Description                           |
+| -------------- | ---------------------------- | ------------------------------------- |
+| `arm64`        | 64-bit                       | For Pi 3, 4, 400, 5, and newer models |
+| `linux/arm/v7` | 32-bit (armhf)               | Standard 32-bit for most Pi models    |
+| `linux/arm/v6` | 32-bit (armel)               | Legacy support (e.g., Pi Zero, 1)     |
 
 ## Setup／Installation
 
