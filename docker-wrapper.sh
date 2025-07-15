@@ -8,9 +8,14 @@ set -o pipefail
 
 source "./.raspios-versions"
 
+# Default values.
+TAG="raspios-lite:latest"
+PLATFORM="linux/arm64"
+ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_arm64/archive/${ARM64_VERSION}/root.tar.xz"
+
 docker buildx build \
   --load \
-  --platform linux/arm64 \
+  --platform ${PLATFORM} \
   --no-cache \
-  --build-arg ROOTFS_URL=https://downloads.raspberrypi.com/raspios_lite_arm64/archive/${ARM64_VERSION}/root.tar.xz \
-  --tag raspios-lite:latest .
+  --build-arg ROOTFS_URL="${ROOTFS_URL}" \
+  --tag ${TAG} .
