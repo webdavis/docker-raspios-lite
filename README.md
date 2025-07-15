@@ -37,13 +37,13 @@ brew install hadolint
 
 ### Running Hadolint
 
-To lint the `Dockerfile`, run:
+To lint the [`Dockerfile`](./Dockerfile), run:
 
 ```bash
 hadolint Dockerfile
 ```
 
-Configuration is defined in the [.hadolint.yaml](./.hadolint.yaml) file at the root of the
+Configuration is defined in the [`.hadolint.yaml`](./.hadolint.yaml) file at the root of the
 project.
 
 ## Local Builds
