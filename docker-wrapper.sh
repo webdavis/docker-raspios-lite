@@ -83,6 +83,11 @@ while true; do
       list_local_project_architectures
       shift
       ;;
+    -s| --list-local-system-arch)
+      BUILD='false'
+      list_local_system_architectures
+      shift
+      ;;
     -r | --list-remote-project-arch)
       BUILD='false'
       list_remote_project_architectures
@@ -91,11 +96,6 @@ while true; do
     -R | --list-remote-system-arch)
       BUILD='false'
       list_remote_system_architectures
-      shift
-      ;;
-    -s| --list-local-system-arch)
-      BUILD='false'
-      list_local_system_architectures
       shift
       ;;
     --)
