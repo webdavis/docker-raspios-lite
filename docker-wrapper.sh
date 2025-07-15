@@ -28,11 +28,12 @@ list_remote_system_architectures() {
   ./list-image-architectures.sh -r -s
 }
 
-short='abcdlprRs'
-long='armv8,armv7,armv6,dry-run,load,list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch'
+SHORT_FLAGS='abcdlprRs'
+LONG_FLAGS='armv8,armv7,armv6,dry-run,load,'
+LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch'
 
 # Parse options
-OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
+OPTIONS="$(getopt -o "$SHORT_FLAGS" --long "$LONG_FLAGS" -- "$@")"
 eval set -- "$OPTIONS"
 
 # Default values.
