@@ -8,11 +8,14 @@ This project builds and publishes Docker images for Raspberry Pi OS Lite on [Doc
 
 ## Supported Architectures
 
-| Architecture   | Raspberry Pi OS Lite Variant | Description                           |
-| -------------- | ---------------------------- | ------------------------------------- |
-| `arm64`        | 64-bit                       | For Pi 3, 4, 400, 5, and newer models |
-| `linux/arm/v7` | 32-bit (armhf)               | Standard 32-bit for most Pi models    |
-| `linux/arm/v6` | 32-bit (armel)               | Legacy support (e.g., Pi Zero, 1)     |
+The following tags are available on Docker Hub under
+[webdavis/raspio-lite](https://hub.docker.com/repository/docker/webdavis/docker-raspios-lite/general):
+
+| Docker Tags | Architecture   | OS Variant     | Target Devices                       |
+| ----------- | -------------- | -------------- | ------------------------------------ |
+| `arm64`     | `arm64`        | 64-bit         | Raspberry Pi 3, 4, 400, 5, and newer |
+| `armv7`     | `linux/arm/v7` | 32-bit (armhf) | Most Raspberry Pi models             |
+| `armv6`     | `linux/arm/v6` | 32-bit (armel) | Raspberry Pi Zero, Pi 1, legacy...   |
 
 ## Setup／Installation
 
