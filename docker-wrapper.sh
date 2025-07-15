@@ -13,19 +13,19 @@ set_armhf_rootfs_url() {
 }
 
 list_local_project_architectures() {
-  ./list-image-architectures.sh -l
+  ./scripts/list-image-architectures.sh -l
 }
 
 list_local_system_architectures() {
-  ./list-image-architectures.sh -s
+  ./scripts/list-image-architectures.sh -s
 }
 
 list_remote_project_architectures() {
-  ./list-image-architectures.sh -r
+  ./scripts/list-image-architectures.sh -r
 }
 
 list_remote_system_architectures() {
-  ./list-image-architectures.sh -r -s
+  ./scripts/list-image-architectures.sh -r -s
 }
 
 SHORT_FLAGS='abcdlprRs'
