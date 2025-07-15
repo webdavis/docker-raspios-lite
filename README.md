@@ -32,14 +32,7 @@ brew install --cask docker-desktop
 Once installed, launch **Docker Desktop** to complete the setup (accepting licenses and etc.),
 before running builds.
 
-## Raspberry Pi OS Lite Root File System
-
-The latest root file system for Raspberry Pi OS Lite is available as `root.tar.xz` in the
-[Raspberry Pi - Official Downloads Archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
-
-Just click on the latest version (or most recent date).
-
-## Linting
+### Linting
 
 This project uses [Hadolint](https://github.com/hadolint/hadolint) to enforce `Dockerfile` best
 practices.
@@ -50,7 +43,7 @@ Hadolint can be installed using Homebrew:
 brew install hadolint
 ```
 
-### Running Hadolint
+#### Running Hadolint
 
 To lint the [`Dockerfile`](./Dockerfile), run:
 
@@ -60,6 +53,13 @@ hadolint Dockerfile
 
 Linting rules for this project are defined in the [`.hadolint.yaml`](./.hadolint.yaml)
 file.
+
+### Raspberry Pi OS Lite Root File System
+
+The latest root file system for Raspberry Pi OS Lite is available as `root.tar.xz` in the
+[Raspberry Pi - Official Downloads Archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
+
+Just click on the latest version (or most recent date).
 
 ## Local Builds
 
