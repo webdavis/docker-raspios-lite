@@ -12,14 +12,23 @@ set_armhf_rootfs_url() {
   declare -g ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_armhf/archive/${ARMHF_VERSION}/root.tar.xz"
 }
 
-short='abcdl'
-long='armv8,armv7,armv6,dry-run,load'
+list_local_architectures() {
+  ./list-image-architectures.sh -l
+}
+
+list_remote_architectures() {
+  ./list-image-architectures.sh -r
+}
+
+short='abcdlLr'
+long='armv8,armv7,armv6,dry-run,load,list,remote'
 
 # Parse options
 OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
 eval set -- "$OPTIONS"
 
 # Default values.
+BUILD='true'
 ARCH='arm64'
 PLATFORM='linux/arm64'
 PROFILE='webdavis'
@@ -32,28 +41,42 @@ DRY_RUN='false'
 while true; do
   case "$1" in
     -a | --arm64)
+      BUILD='true'
       ARCH='arm64'
       PLATFORM='linux/arm64'
       shift
       ;;
     -b | --armv7)
+      BUILD='true'
       ARCH='armv7'
       PLATFORM='linux/arm/v7'
       set_armhf_rootfs_url
       shift
       ;;
     -c | --armv6)
+      BUILD='true'
       ARCH='armv6'
       PLATFORM='linux/arm/v6'
       set_armhf_rootfs_url
       shift
       ;;
     -d | --dry-run)
+      BUILD='false'
       DRY_RUN='true'
       shift
       ;;
     -l | --load)
       LOAD='true'
+      shift
+      ;;
+    -L | --list)
+      BUILD='false'
+      list_local_architectures
+      shift
+      ;;
+    -r | --remote)
+      BUILD='false'
+      list_remote_architectures
       shift
       ;;
     --)
@@ -94,7 +117,9 @@ main() {
 
   if [[ "$DRY_RUN" == 'true' ]]; then
     docker_build_dry_run
-  else
+  fi
+
+  if [[ "$BUILD" == 'true' ]]; then
     docker_build
   fi
 }
