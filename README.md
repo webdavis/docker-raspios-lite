@@ -23,3 +23,26 @@ The latest root file system for Raspberry Pi OS Lite is available as `root.tar.x
 [Official Downloads Archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
 
 (Just click on the latest version, or most recent date.)
+
+## Linting
+
+This project uses [Hadolint](https://github.com/hadolint/hadolint) to enforce Dockerfile best
+practices.
+
+Hadoline can be installed using Homebrew:
+
+```bash
+brew install hadolint
+```
+
+### Running Hadolint
+
+To lint the `Dockerfile`, run:
+
+```bash
+hadolint Dockerfile
+```
+
+Configuration is defined in the [.hadolint.yaml](./.hadolint.yaml) file at the root of the
+project.
+
