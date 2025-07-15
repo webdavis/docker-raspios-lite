@@ -5,8 +5,8 @@ Raspberry Pi OS Lite Docker images hosted on [Docker Hub](https://hub.docker.com
 ## Setup／Installation
 
 This project assumes that both
-[Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and \[Buildx\] are
-installed.
+[Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
+[Buildx](https://github.com/docker/buildx) are installed.
 
 On macOS, you can install Docker Desktop (which includes Buildx) via Homebrew:
 
@@ -20,16 +20,16 @@ before running builds.
 ## Raspberry Pi OS Lite Root File System
 
 The latest root file system for Raspberry Pi OS Lite is available as `root.tar.xz` in the
-[Official Downloads Archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
+[Raspberry Pi - Official Downloads Archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
 
-(Just click on the latest version, or most recent date.)
+Just click on the latest version (or most recent date).
 
 ## Linting
 
-This project uses [Hadolint](https://github.com/hadolint/hadolint) to enforce Dockerfile best
+This project uses [Hadolint](https://github.com/hadolint/hadolint) to enforce `Dockerfile` best
 practices.
 
-Hadoline can be installed using Homebrew:
+Hadolint can be installed using Homebrew:
 
 ```bash
 brew install hadolint
@@ -43,25 +43,30 @@ To lint the [`Dockerfile`](./Dockerfile), run:
 hadolint Dockerfile
 ```
 
-Configuration is defined in the [`.hadolint.yaml`](./.hadolint.yaml) file at the root of the
-project.
+Linting rules for this project are defined in the [`.hadolint.yaml`](./.hadolint.yaml)
+file.
 
 ## Local Builds
 
-To build the images locally use the [`docker-wrapper.sh`](./docker-wrapper.sh) script:
+Use the [`docker-wrapper.sh`](./docker-wrapper.sh) script to build and inspect project images.
+
+### Build Images Locally
 
 ```bash
 ./docker-wrapper.sh
 ```
 
-To list all of the project image architectures run:
+### List Local Project Architectures
 
 ```bash
 ./docker-wrapper.sh -p
 ```
 
-To list all of the project image architectures stored on Docker Hub run:
+### List Remote Image Architectures (Docker Hub Manifests)
 
 ```bash
 ./docker-wrapper.sh -r
 ```
+
+> \[!NOTE\]
+> Commands that access Docker Hub require you to be logged in via `docker login`.
