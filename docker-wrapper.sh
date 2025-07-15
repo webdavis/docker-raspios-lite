@@ -12,8 +12,8 @@ set_armhf_rootfs_url() {
   declare -g ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_armhf/archive/${ARMHF_VERSION}/root.tar.xz"
 }
 
-short='abc'
-long='armv8,armv7,armv6'
+short='abcdl'
+long='armv8,armv7,armv6,dry-run,load'
 
 # Parse options
 OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
@@ -26,6 +26,8 @@ PROFILE='webdavis'
 OS='raspios-lite'
 REPO="${PROFILE}/${OS}"
 ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_arm64/archive/${ARM64_VERSION}/root.tar.xz"
+LOAD='true'
+DRY_RUN='false'
 
 while true; do
   case "$1" in
@@ -46,6 +48,14 @@ while true; do
       set_armhf_rootfs_url
       shift
       ;;
+    -d | --dry-run)
+      DRY_RUN='true'
+      shift
+      ;;
+    -l | --load)
+      LOAD='true'
+      shift
+      ;;
     --)
       shift
       break
@@ -59,9 +69,34 @@ done
 
 TAG="${REPO}:${ARCH}"
 
-docker buildx build \
-  --load \
-  --platform "${PLATFORM}" \
-  --no-cache \
-  --build-arg ROOTFS_URL="${ROOTFS_URL}" \
-  --tag "${TAG}" .
+DOCKER_CMD="docker buildx build \
+--platform \"${PLATFORM}\" \
+--no-cache \
+--build-arg ROOTFS_URL=\"${ROOTFS_URL}\" \
+--tag \"${TAG}\" ."
+
+docker_load() {
+  DOCKER_CMD+=" --load"
+}
+
+docker_build_dry_run() {
+  echo "$DOCKER_CMD"
+}
+
+docker_build() {
+  eval "$DOCKER_CMD"
+}
+
+main() {
+  if [[ "$LOAD" == 'true' ]]; then
+    docker_load
+  fi
+
+  if [[ "$DRY_RUN" == 'true' ]]; then
+    docker_build_dry_run
+  else
+    docker_build
+  fi
+}
+
+main "$@"
