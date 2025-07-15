@@ -12,16 +12,24 @@ set_armhf_rootfs_url() {
   declare -g ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_armhf/archive/${ARMHF_VERSION}/root.tar.xz"
 }
 
-list_local_architectures() {
+list_local_project_architectures() {
   ./list-image-architectures.sh -l
 }
 
-list_remote_architectures() {
+list_local_system_architectures() {
+  ./list-image-architectures.sh -s
+}
+
+list_remote_project_architectures() {
   ./list-image-architectures.sh -r
 }
 
-short='abcdlLr'
-long='armv8,armv7,armv6,dry-run,load,list,remote'
+list_remote_system_architectures() {
+  ./list-image-architectures.sh -r -s
+}
+
+short='abcdlprRs'
+long='armv8,armv7,armv6,dry-run,load,list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch'
 
 # Parse options
 OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
@@ -69,14 +77,24 @@ while true; do
       LOAD='true'
       shift
       ;;
-    -L | --list)
+    -p | --list-local-project-arch)
       BUILD='false'
-      list_local_architectures
+      list_local_project_architectures
       shift
       ;;
-    -r | --remote)
+    -r | --list-remote-project-arch)
       BUILD='false'
-      list_remote_architectures
+      list_remote_project_architectures
+      shift
+      ;;
+    -R | --list-remote-system-arch)
+      BUILD='false'
+      list_remote_system_architectures
+      shift
+      ;;
+    -s| --list-local-system-arch)
+      BUILD='false'
+      list_local_system_architectures
       shift
       ;;
     --)

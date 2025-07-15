@@ -1,77 +1,74 @@
 #!/usr/bin/env bash
 
-function parse_command_line_arguments() {
-  local short='lr'
-  local long='local,remote'
+assert_images_exist() {
+  local images="$1"
+  local message="$2"
 
-  local='false'
-  remote='false'
-
-  OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
-
-  eval set -- "$OPTIONS"
-
-  while true; do
-    case "$1" in
-      -l | --local)
-        local='true'
-        shift
-        ;;
-      -r | --remote)
-        remote='true'
-        shift
-        ;;
-      --)
-        shift
-        break
-        ;;
-    esac
-  done
-
-  if [[ "$local" == 'false' && "$remote" == 'false' ]]; then
-    list_local_architectures
-    return
-  fi
-
-  if [[ "$local" == 'true' ]]; then
-    list_local_architectures
-  fi
-
-  if [[ "$remote" == 'true' ]]; then
-    list_remote_architectures
-  fi
-}
-
-get_images() {
-  image_ignore_list='moby/buildkit\|none'
-  # Get a list of all image names on the system in repo:tag format.
-  IMAGES="$(docker image ls -a --format '{{.Repository}}:{{.Tag}}' | grep -v "$image_ignore_list")"
-
-  if [[ $IMAGES == '' ]]; then
-    echo 'No images have been created.'
+  if [[ "$images" == '' ]]; then
+    echo "$message" >&2
     exit 1
   fi
 }
 
-list_local_architectures() {
-  local image architecture
+get_system_images() {
+  local image_ignore_list='none'
 
-  local output="Image\tArchitecture\n"
-  local output+="-----\t------------\n"
-  for image in $IMAGES; do
+  # Get a list of all images for this project in repo:tag format.
+  local images
+  images="$(docker image ls -a --format '{{.Repository}}:{{.Tag}}' \
+    | grep -v "$image_ignore_list")"
+
+  assert_images_exist "$images" 'No images have been created'
+
+  echo "$images"
+}
+
+get_project_images() {
+  local image_ignore_list='moby/buildkit\|none'
+  local image_allow_list='^webdavis/raspios-lite'
+
+  # Get a list of all images for this project in repo:tag format.
+  local images
+  images="$(docker image ls -a --format '{{.Repository}}:{{.Tag}}' \
+    | grep -v "$image_ignore_list" \
+    | grep "$image_allow_list")"
+
+  assert_images_exist "$images" 'No project images have been created'
+
+  echo "$images"
+}
+
+list_local_architectures() {
+  local project_only="$1"
+  local images="$2"
+
+  local output
+  if [[ "$project_only" == 'true' ]]; then
+    output="Project Image\tArchitecture\n"
+    output+="-------------\t------------\n"
+  else
+    output="System Image\tArchitecture\n"
+    output+="------------\t------------\n"
+  fi
+
+  local image architecture
+  for image in $images; do
+
     # Get image details and extract architecture.
     architecture="$(docker image inspect -f '{{ .Architecture }}{{ .Variant }}' "$image")"
 
     output+="${image}\t${architecture}\n"
   done
 
-  echo -e "${output}" | column -t
+  echo -e "${output}" | column -s $'\t' -t
 }
 
 list_remote_architectures() {
+  local images="$1"
+
   local image manifest architectures formatted_architectures
 
-  for image in $IMAGES; do
+  for image in $images; do
 
     # Get manifest details and extract architectures.
     manifest="$(docker manifest inspect "$image")"
@@ -87,8 +84,61 @@ list_remote_architectures() {
   done
 }
 
+parse_command_line_arguments() {
+  local short='slr'
+  local long='system,local,remote'
+
+  local project_only='true'
+  local local='false'
+  local remote='false'
+
+  OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
+
+  eval set -- "$OPTIONS"
+
+  while true; do
+    case "$1" in
+      -s | --system)
+        project_only='false'
+        shift
+        ;;
+      -l | --local)
+        local='true'
+        shift
+        ;;
+      -r | --remote)
+        remote='true'
+        shift
+        ;;
+      --)
+        shift
+        break
+        ;;
+    esac
+  done
+
+  local images
+  if [[ "$project_only" == 'true' ]]; then
+    images="$(get_project_images)"
+  else
+    images="$(get_system_images)"
+  fi
+
+  if [[ "$local" == 'false' && "$remote" == 'false' ]]; then
+    list_local_architectures "$project_only" "$images"
+    return
+  fi
+
+  if [[ "$local" == 'true' ]]; then
+    list_local_architectures "$project_only" "$images"
+  fi
+
+  if [[ "$remote" == 'true' ]]; then
+    list_remote_architectures "$images"
+  fi
+}
+
 main() {
-  get_images
   parse_command_line_arguments "$@"
 }
 
