@@ -4,10 +4,12 @@ on:
     paths:
       - 'Dockerfile'
       - '.github/workflows/cd.yml'
+      - '.raspios-versions'
   pull_request:
     paths:
       - 'Dockerfile'
       - '.github/workflows/cd.yml'
+      - '.raspios-versions'
   workflow_dispatch:
 
 jobs:
