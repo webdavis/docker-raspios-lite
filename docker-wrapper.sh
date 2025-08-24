@@ -28,7 +28,7 @@ list_remote_system_architectures() {
   ./scripts/list-image-architectures.sh -r -s
 }
 
-SHORT_FLAGS='abcdlprRs'
+SHORT_FLAGS='abcdolLrR'
 LONG_FLAGS='armv8,armv7,armv6,dry-run,load,'
 LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch'
 
@@ -74,16 +74,16 @@ while true; do
       DRY_RUN='true'
       shift
       ;;
-    -l | --load)
+    -o | --load)
       LOAD='true'
       shift
       ;;
-    -p | --list-local-project-arch)
+    -l | --list-local-project-arch)
       BUILD='false'
       list_local_project_architectures
       shift
       ;;
-    -s| --list-local-system-arch)
+    -L| --list-local-system-arch)
       BUILD='false'
       list_local_system_architectures
       shift
