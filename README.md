@@ -8,8 +8,9 @@ This project builds and publishes Docker images for Raspberry Pi OS Lite on [Doc
 
 ## Supported Architectures
 
-The following tags are available on Docker Hub under
-[webdavis/raspio-lite](https://hub.docker.com/repository/docker/webdavis/docker-raspios-lite/general):
+The following tags are available in the
+[webdavis/raspio-lite](https://hub.docker.com/repository/docker/webdavis/docker-raspios-lite/general)
+Docker Hub repo:
 
 | Docker Tags | Architecture   | OS Variant     | Target Devices                       |
 | ----------- | -------------- | -------------- | ------------------------------------ |
@@ -23,14 +24,14 @@ This project assumes that both
 [Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
 [Buildx](https://github.com/docker/buildx) are installed.
 
-On macOS, you can install Docker Desktop (which includes Buildx) via Homebrew:
+On macOS, you can install **Docker Desktop** (which includes Buildx) via Homebrew:
 
 ```bash
 brew install --cask docker-desktop
 ```
 
-Once installed, launch **Docker Desktop** to complete the setup (accepting licenses and etc.),
-before running builds.
+Once installed, launch **Docker Desktop** to complete the setup (accepting licenses, etc.),
+before starting any builds.
 
 ### Linting
 
@@ -56,8 +57,8 @@ file.
 
 ### Raspberry Pi OS Lite Root File System
 
-The latest root file system for Raspberry Pi OS Lite is available as `root.tar.xz` in the
-[Raspberry Pi - Official Downloads Archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
+The latest root file system for Raspberry Pi OS Lite is provided as `root.tar.xz` in Raspberry
+Pi's [official downloads archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
 
 Just click on the latest version (or most recent date).
 
@@ -73,15 +74,21 @@ Use the [`docker-wrapper.sh`](./docker-wrapper.sh) script to build and inspect p
 
 ### List Local Project Architectures
 
+The following command lists the architectures this project has built locally on your machine:
+
 ```bash
-./docker-wrapper.sh -p
+./docker-wrapper.sh -l
 ```
 
 ### List Remote Image Architectures (Docker Hub Manifests)
 
-```bash
-./docker-wrapper.sh -r
-```
+The command below lists the image manifests from Docker Hub that are tracked by this
+project, which shows all available platforms (architectures/OS variants) that the image
+supports.
 
 > \[!NOTE\]
 > Commands that access Docker Hub require you to be logged in via `docker login`.
+
+```bash
+./docker-wrapper.sh -r
+```
