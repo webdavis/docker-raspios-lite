@@ -26,7 +26,11 @@ Images are published as multi-arch manifests. Use the table below to choose the 
 > - (**Additional Tip:** Choose the `arch-<date>` tag alias for better reproducability in
 >   version control tracked projects.)
 
-## Setup／Installation
+## Usage
+
+...Work in progress.
+
+### Docker Setup／Installation
 
 This project assumes that both
 [Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
@@ -42,6 +46,13 @@ Once installed, launch **Docker Desktop** to complete the setup (accepting licen
 before starting any builds.
 
 ## How to work on this Project!
+
+Again, assuming you're on macOS, you will need to install **Docker Desktop** (which comes with
+Buildx) via Homebrew:
+
+```bash
+brew install --cask docker-desktop
+```
 
 ### Linting
 
