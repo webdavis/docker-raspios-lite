@@ -63,7 +63,7 @@ brew install --cask docker-desktop
 After installation, launch **Docker Desktop** complete the setup (accepting licenses, etc.),
 before building any images.
 
-### How to Use These Images
+### Running the Images
 
 These images can be used as a base for Raspberry Pi OS Lite-specific containers:
 
