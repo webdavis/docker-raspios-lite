@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  setup:
     runs-on: ubuntu-24.04
 
     steps:
@@ -41,8 +41,18 @@ jobs:
           docker buildx create --use --name mybuilder
           docker buildx inspect mybuilder --bootstrap
 
-      - name: Build & Push 64-bit Raspberry Pi OS Lite (arm64) to Docker Hub
-        run: ./docker-wrapper.sh -a -p
+  deploy:
+    needs: setup
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        platform: [arm64, armhf]
 
-      - name: Build & Push 32-bit Raspberry Pi OS Lite (armhf) to Docker Hub
-        run: ./docker-wrapper.sh -H -p
+    steps:
+      - name: Build & Push to Docker Hub
+        run: |
+          if [ "${{ matrix.platform }}" = "arm64" ]; then
+            ./docker-wrapper.sh --arm64 --push
+          else
+            ./docker-wrapper.sh --armhf-all --push
+          fi
