@@ -74,6 +74,31 @@ Or run a container directly, like so:
 docker run --rm -it --platform linux/arm64 webdavis/raspios-lite:arm64
 ```
 
+> \[!NOTE\]
+> To run ARM containers on an x86_64 (Intel/AMD) host, QEMU emulation must be enabled.
+
+### Setting up QEMU Installation on x86_64 Hosts
+
+Install QEMU and enable `binfmt` support via your system’s package manager:
+
+#### Debian/Ubuntu:
+
+```bash
+sudo apt install qemu-user-static binfmt-support
+```
+
+#### Fedora:
+
+```bash
+sudo dnf install qemu-user-static binfmt-support
+```
+
+#### Arch Linux:
+
+```bash
+sudo pacman -S qemu-user-static binfmt-support
+```
+
 ## How to work on this Project!
 
 This project requires [Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
