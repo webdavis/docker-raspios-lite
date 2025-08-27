@@ -41,8 +41,8 @@ jobs:
           docker buildx create --use --name mybuilder
           docker buildx inspect mybuilder --bootstrap
 
-      - name: Build & Push 64-bit Raspberry Pi OS Lite (arm64) to Docker Hub
-        run: ./docker-wrapper.sh -a -p
+      - name: Build & Push 64-bit Raspberry Pi OS Lite to Docker Hub
+        run: ./docker-wrapper.sh --arm64 --push
 
-      - name: Build & Push 32-bit Raspberry Pi OS Lite (armhf) to Docker Hub
-        run: ./docker-wrapper.sh -H -p
+      - name: Build & Push 32-bit Raspberry Pi OS Lite to Docker Hub
+        run: ./docker-wrapper.sh --armhf-all --push
