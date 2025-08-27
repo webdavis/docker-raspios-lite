@@ -8,6 +8,10 @@ set -o pipefail
 
 source "./.raspios-versions"
 
+get_project_root_directory() {
+  git rev-parse --show-toplevel
+}
+
 set_armhf_rootfs_url() {
   declare -g ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_armhf/archive/${ARMHF_VERSION}/root.tar.xz"
 }
@@ -28,9 +32,10 @@ list_remote_system_architectures() {
   ./scripts/list-image-architectures.sh -r -s
 }
 
-SHORT_FLAGS='ah:doplLrR'
+SHORT_FLAGS='ah:doplLrRc'
 LONG_FLAGS='arm64,armhf:,dry-run,load,push,'
-LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch'
+LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch,'
+LONG_FLAGS+='clean'
 
 # Parse options
 OPTIONS="$(getopt -o "$SHORT_FLAGS" --long "$LONG_FLAGS" -- "$@")"
@@ -101,6 +106,10 @@ while true; do
       list_remote_system_architectures
       shift
       ;;
+    -c | --clean)
+      ./scripts/clean.sh
+      exit 1
+      ;;
     --)
       shift
       break
@@ -136,6 +145,8 @@ docker_build() {
 }
 
 main() {
+  cd "$(get_project_root_directory)" || exit 1
+
   if [[ "$PUSH" == 'true' ]]; then
     if [[ "$LOAD" == 'true' ]]; then
       echo "Warning: --load disabled because --push is requested" >&2
