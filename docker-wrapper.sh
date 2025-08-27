@@ -130,12 +130,6 @@ while true; do
   esac
 done
 
-TAG="${REPO}:${ARCH}"
-
-DOCKER_CMD="docker buildx build \
---platform \"${PLATFORM}\" \
---build-arg ROOTFS_URL=\"${ROOTFS_URL}\" \
---tag \"${TAG}\" ."
 
 docker_load() {
   DOCKER_CMD+=" --load"
@@ -158,35 +152,8 @@ get_release_tag() {
   echo "${version:0:10}" | tr -d '-'
 }
 
-docker_build_dry_run() {
-  echo "$DOCKER_CMD"
-}
-
-docker_build() {
-  eval "$DOCKER_CMD"
-}
-
-main() {
-  if [[ "$PUSH" == 'true' ]]; then
-    if [[ "$LOAD" == 'true' ]]; then
-      echo "Warning: --load disabled because --push is requested" >&2
-    fi
-    LOAD='false'
-
-    if [[ "$ARMHF_ALL" == "true" ]]; then
-      PLATFORM="linux/arm/v6,linux/arm/v7,linux/arm64"
-    fi
-
-    docker_push
-  fi
-
-  # Local load only happens for single-platform builds.
-  if [[ "$LOAD" == 'true' ]]; then
-    docker_load
-  fi
-
+add_image_tags() {
   DOCKER_CMD+=" --tag ${REPO}:${ARCH}-$(get_release_tag "${ARCH}")"
-
   case "$ARCH" in
     armhf)
       DOCKER_CMD+=" --tag ${REPO}:32-bit"
@@ -197,6 +164,52 @@ main() {
       DOCKER_CMD+=" --tag ${REPO}:64-bit-$(get_release_tag "${ARCH}")"
       ;;
   esac
+}
+
+docker_build_dry_run() {
+  echo "$DOCKER_CMD"
+}
+
+docker_build() {
+  eval "$DOCKER_CMD"
+}
+
+build_docker_cmd() {
+  local tag="${REPO}:${ARCH}"
+
+  DOCKER_CMD="docker buildx build \
+--platform \"${PLATFORM}\" \
+--build-arg ROOTFS_URL=\"${ROOTFS_URL}\" \
+--tag \"${tag}\" ."
+}
+
+main() {
+  if [[ "$ARMHF_ALL" == "true" ]]; then
+    if [[ "$LOAD" == 'true' ]]; then
+      echo "Error: You cannot use '--load' with '--armhf-all'. Multi-platform builds require pushing to a registry and cannot be loaded locally" >&2
+      exit 1
+    fi
+
+    PLATFORM="linux/arm/v6,linux/arm/v7,linux/arm64"
+  fi
+
+  build_docker_cmd
+
+  if [[ "$PUSH" == 'true' && "$LOAD" == 'true' ]]; then
+    echo "Warning: '--load' disabled because '--push' is requested" >&2
+    LOAD='false'
+  fi
+
+  # Local load only happens for single-platform builds.
+  if [[ "$LOAD" == 'true' ]]; then
+    docker_load
+  fi
+
+  if [[ "$PUSH" == 'true' ]]; then
+    docker_push
+  fi
+
+  add_image_tags
 
   if [[ "$DRY_RUN" == 'true' ]]; then
     docker_build_dry_run
