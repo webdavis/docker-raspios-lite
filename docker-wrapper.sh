@@ -19,19 +19,19 @@ set_armhf_rootfs_url() {
 }
 
 list_local_project_architectures() {
-  ./scripts/list-image-architectures.sh -l
+  ./scripts/list-image-platforms.sh -l
 }
 
 list_local_system_architectures() {
-  ./scripts/list-image-architectures.sh -s
+  ./scripts/list-image-platforms.sh -s
 }
 
 list_remote_project_architectures() {
-  ./scripts/list-image-architectures.sh -r
+  ./scripts/list-image-platforms.sh -r
 }
 
 list_remote_system_architectures() {
-  ./scripts/list-image-architectures.sh -r -s
+  ./scripts/list-image-platforms.sh -r -s
 }
 
 SHORT_FLAGS='ah:HdoplLrRc'
