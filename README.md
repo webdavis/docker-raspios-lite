@@ -43,13 +43,10 @@ Images are published as multi-arch manifests. Use the table below to choose the 
 
 ## Usage
 
-...Work in progress.
+This section explains how to set up Docker on your machine and work with the Raspberry Pi OS
+Lite images provided by this project. Follow the steps below to get started.
 
 ### Docker Setup／Installation
-
-This project assumes that both
-[Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
-[Buildx](https://github.com/docker/buildx) are installed.
 
 On macOS, you can install **Docker Desktop** (which includes Buildx) via Homebrew:
 
@@ -57,10 +54,17 @@ On macOS, you can install **Docker Desktop** (which includes Buildx) via Homebre
 brew install --cask docker-desktop
 ```
 
-Once installed, launch **Docker Desktop** to complete the setup (accepting licenses, etc.),
-before starting any builds.
+After installation, launch **Docker Desktop** complete the setup (accepting licenses, etc.),
+before building any images.
+
+### How to Use These Images
+
+...Work in progress.
 
 ## How to work on this Project!
+
+This project requires [Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
+[Buildx](https://github.com/docker/buildx).
 
 Again, assuming you're on macOS, you will need to install **Docker Desktop** (which comes with
 Buildx) via Homebrew:
