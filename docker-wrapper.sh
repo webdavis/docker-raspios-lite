@@ -62,7 +62,7 @@ while true; do
         armv6) PLATFORM='linux/arm/v6' ;;
         armv7) PLATFORM='linux/arm/v7' ;;
         arm64) PLATFORM='linux/arm64' ;;
-        *) echo "Unknown variant: $2" >&2; exit 1 ;;
+        *) echo "Unknown '${ARCH}' variant: $2" >&2; exit 1 ;;
       esac
       set_armhf_rootfs_url
       shift 2
