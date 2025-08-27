@@ -70,22 +70,27 @@ list_local_architectures() {
 list_remote_architectures() {
   local images="$1"
 
-  local image manifest architectures formatted_architectures
+  local output
+  output="Remote Image\tSupported Platforms\n"
+  output+="------------\t-------------------\n"
 
+  local image manifest architectures formatted_architectures
   for image in $images; do
 
     # Get manifest details and extract architectures.
-    manifest="$(docker manifest inspect "$image")"
+    manifest="$(docker manifest inspect "$image")" || continue
 
     if [[ $? -ne 0 ]]; then
       continue
     fi
 
-    architectures="$(echo "$manifest" | jq -r '.manifests[] | .platform.architecture')"
+    architectures="$(echo "$manifest" | jq -r '.manifests[] | "\(.platform.architecture)\(.platform.variant // "")"')"
     formatted_architectures="$(echo "$architectures" | grep -v 'unknown' | tr '\n' ' ')"
 
-    echo "Supported Architectures for $image: $formatted_architectures"
+    output+="$image\t$formatted_architectures\n"
   done
+
+  echo -e "${output}" | column -s $'\t' -t
 }
 
 parse_command_line_arguments() {
