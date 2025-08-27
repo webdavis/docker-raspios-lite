@@ -4,13 +4,13 @@
 
 # docker-raspios-lite
 
-This project builds and publishes Docker images for Raspberry Pi OS Lite on [Docker Hub](https://hub.docker.com/).
+This project builds and publishes Docker images for Raspberry Pi OS Lite on [Docker
+Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
 
 ## Supported Architectures
 
-The following tags are available in the
-[webdavis/raspio-lite](https://hub.docker.com/repository/docker/webdavis/docker-raspios-lite/general)
-Docker Hub repo:
+These images are published for multiple Raspberry Pi architectures. You can find the full list
+of tags on [Docker Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/tags):
 
 | Docker Tags | Architecture   | OS Variant     | Target Devices                       |
 | ----------- | -------------- | -------------- | ------------------------------------ |
