@@ -153,6 +153,11 @@ main() {
     docker_load
   fi
 
+  case "$ARCH" in
+    armhf) DOCKER_CMD+=" --tag ${REPO}:32-bit" ;;
+    arm64) DOCKER_CMD+=" --tag ${REPO}:64-bit" ;;
+  esac
+
   if [[ "$DRY_RUN" == 'true' ]]; then
     docker_build_dry_run
   fi
