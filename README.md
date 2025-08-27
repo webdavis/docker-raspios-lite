@@ -60,7 +60,19 @@ before building any images.
 
 ### How to Use These Images
 
-...Work in progress.
+These images can be used as a base for Raspberry Pi OS Lite-specific containers:
+
+```dockerfile
+FROM webdavis/raspios-lite:arm64-20250513
+
+# Add your own layers here...
+```
+
+Or run a container directly, like so:
+
+```bash
+docker run --rm -it --platform linux/arm64 webdavis/raspios-lite:arm64
+```
 
 ## How to work on this Project!
 
