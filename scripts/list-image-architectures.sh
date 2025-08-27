@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Exit immediately if any command fails.
+set -e
+set -o pipefail
+
 assert_images_exist() {
   local images="$1"
   local message="$2"
