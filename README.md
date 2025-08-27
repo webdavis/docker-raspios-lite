@@ -19,7 +19,7 @@ Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
       - [Debian/Ubuntu](#debianubuntu)
       - [Fedora](#fedora)
       - [Arch Linux](#arch-linux)
-- [How to Work on this Project](#how-to-work-on-this-project)
+- [Dev Setup (How to Work on this Project)](#dev-setup-how-to-work-on-this-project)
   - [Building Images Locally](#building-images-locally)
     - [Building 64-bit (arm64) Compatible Images](#building-64-bit-arm64-compatible-images)
     - [Building 32-bit (armhf／armel) Compatible Images](#building-32-bit-armhfarmel-compatible-images)
@@ -105,7 +105,7 @@ sudo dnf install qemu-user-static binfmt-support
 sudo pacman -S qemu-user-static binfmt-support
 ```
 
-## How to work on this Project!
+## Dev Setup (How to Work on this Project)
 
 This project requires [Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
 [Buildx](https://github.com/docker/buildx).
