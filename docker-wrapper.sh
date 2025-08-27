@@ -138,6 +138,19 @@ docker_push() {
   DOCKER_CMD+=" --push"
 }
 
+get_release_tag() {
+  local arch="$1"
+  local version=""
+
+  if [[ "$arch" == "arm64" ]]; then
+    version="$ARM64_VERSION"
+  else
+    version="$ARMHF_VERSION"
+  fi
+
+  echo "${version:0:10}" | tr -d '-'
+}
+
 docker_build_dry_run() {
   echo "$DOCKER_CMD"
 }
@@ -165,9 +178,17 @@ main() {
     docker_load
   fi
 
+  DOCKER_CMD+=" --tag ${REPO}:${ARCH}-$(get_release_tag "${ARCH}")"
+
   case "$ARCH" in
-    armhf) DOCKER_CMD+=" --tag ${REPO}:32-bit" ;;
-    arm64) DOCKER_CMD+=" --tag ${REPO}:64-bit" ;;
+    armhf)
+      DOCKER_CMD+=" --tag ${REPO}:32-bit"
+      DOCKER_CMD+=" --tag ${REPO}:32-bit-$(get_release_tag "${ARCH}")"
+      ;;
+    arm64)
+      DOCKER_CMD+=" --tag ${REPO}:64-bit"
+      DOCKER_CMD+=" --tag ${REPO}:64-bit-$(get_release_tag "${ARCH}")"
+      ;;
   esac
 
   if [[ "$DRY_RUN" == 'true' ]]; then
