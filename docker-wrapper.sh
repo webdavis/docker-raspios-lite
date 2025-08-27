@@ -6,11 +6,13 @@ set -e
 # Ensure the entire pipeline fails if any command in the pipeline fails.
 set -o pipefail
 
-source "./.raspios-versions"
-
 get_project_root_directory() {
   git rev-parse --show-toplevel
 }
+
+cd "$(get_project_root_directory)" || exit 1
+
+source "./.raspios-versions"
 
 set_armhf_rootfs_url() {
   declare -g ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_armhf/archive/${ARMHF_VERSION}/root.tar.xz"
@@ -145,8 +147,6 @@ docker_build() {
 }
 
 main() {
-  cd "$(get_project_root_directory)" || exit 1
-
   if [[ "$PUSH" == 'true' ]]; then
     if [[ "$LOAD" == 'true' ]]; then
       echo "Warning: --load disabled because --push is requested" >&2
