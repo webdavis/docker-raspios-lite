@@ -4,6 +4,8 @@
 
 # docker-raspios-lite
 
+[![CD - Deploy images to Docker Hub](https://github.com/webdavis/docker-raspios-lite/actions/workflows/cd.yml/badge.svg)](https://github.com/webdavis/docker-raspios-lite/actions/workflows/cd.yml)
+
 This project builds and publishes Docker images for Raspberry Pi OS Lite on [Docker
 Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
 
