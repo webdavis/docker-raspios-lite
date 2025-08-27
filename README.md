@@ -123,6 +123,8 @@ sudo dnf install qemu-user-static binfmt-support
 sudo pacman -S qemu-user-static binfmt-support
 ```
 
+______________________________________________________________________
+
 ## Dev Setup (How to Work on this Project)
 
 This project requires [Docker](https://docs.docker.com/desktop/setup/install/mac-install/) and
