@@ -28,8 +28,8 @@ list_remote_system_architectures() {
   ./scripts/list-image-architectures.sh -r -s
 }
 
-SHORT_FLAGS='abcdolLrR'
-LONG_FLAGS='armv8,armv7,armv6,dry-run,load,'
+SHORT_FLAGS='ah:dolLrR'
+LONG_FLAGS='arm64,armhf:,dry-run,load,'
 LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch'
 
 # Parse options
@@ -38,7 +38,7 @@ eval set -- "$OPTIONS"
 
 # Default values.
 BUILD='true'
-ARCH='arm64'
+ARCH='64-bit'
 PLATFORM='linux/arm64'
 PROFILE='webdavis'
 OS='raspios-lite'
@@ -55,19 +55,17 @@ while true; do
       PLATFORM='linux/arm64'
       shift
       ;;
-    -b | --armv7)
+    -h | --armhf)
       BUILD='true'
-      ARCH='armv7'
-      PLATFORM='linux/arm/v7'
+      ARCH='armhf'
+      case "$2" in
+        armv6) PLATFORM='linux/arm/v6' ;;
+        armv7) PLATFORM='linux/arm/v7' ;;
+        arm64) PLATFORM='linux/arm64' ;;
+        *) echo "Unknown variant: $2" >&2; exit 1 ;;
+      esac
       set_armhf_rootfs_url
-      shift
-      ;;
-    -c | --armv6)
-      BUILD='true'
-      ARCH='armv6'
-      PLATFORM='linux/arm/v6'
-      set_armhf_rootfs_url
-      shift
+      shift 2
       ;;
     -d | --dry-run)
       BUILD='false'
@@ -113,7 +111,6 @@ TAG="${REPO}:${ARCH}"
 
 DOCKER_CMD="docker buildx build \
 --platform \"${PLATFORM}\" \
---no-cache \
 --build-arg ROOTFS_URL=\"${ROOTFS_URL}\" \
 --tag \"${TAG}\" ."
 
