@@ -45,5 +45,4 @@ jobs:
         run: ./docker-wrapper.sh -a -p
 
       - name: Build & Push 32-bit Raspberry Pi OS Lite (armhf) to Docker Hub
-        run: |
-          ./docker-wrapper.sh -H -p
+        run: ./docker-wrapper.sh -H -p
