@@ -14,11 +14,11 @@ Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
 These images are published for multiple Raspberry Pi architectures. You can find the full list
 of tags on [Docker Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/tags):
 
-| Docker Tags | Architecture   | OS Variant     | Target Devices                       |
-| ----------- | -------------- | -------------- | ------------------------------------ |
-| `arm64`     | `arm64`        | 64-bit         | Raspberry Pi 3, 4, 400, 5, and newer |
-| `armv7`     | `linux/arm/v7` | 32-bit (armhf) | Most Raspberry Pi models             |
-| `armv6`     | `linux/arm/v6` | 32-bit (armel) | Raspberry Pi Zero, Pi 1, legacy...   |
+| Docker Tag          | Architectures Included        | OS Variant     | Target Devices                                  |
+| ------------------- | ----------------------------- | -------------- | ----------------------------------------------- |
+| `arm64` or `64-bit` | `linux/arm64`                 | 64-bit         | Raspberry Pi 3, 4, 400, 5, and newer            |
+| `armhf` or `32-bit` | `linux/arm/v7`, `linux/arm64` | 32-bit (armhf) | Raspberry Pi 2, 3, 4, Zero 2, and most models   |
+| *(via `armhf`)*     | `linux/arm/v6`                | 32-bit (armel) | Raspberry Pi Zero (v1), Pi 1, and legacy boards |
 
 ## Setup／Installation
 
