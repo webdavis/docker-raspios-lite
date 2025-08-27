@@ -28,8 +28,8 @@ list_remote_system_architectures() {
   ./scripts/list-image-architectures.sh -r -s
 }
 
-SHORT_FLAGS='ah:dolLrR'
-LONG_FLAGS='arm64,armhf:,dry-run,load,'
+SHORT_FLAGS='ah:doplLrR'
+LONG_FLAGS='arm64,armhf:,dry-run,load,push,'
 LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch'
 
 # Parse options
@@ -44,8 +44,9 @@ PROFILE='webdavis'
 OS='raspios-lite'
 REPO="${PROFILE}/${OS}"
 ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_arm64/archive/${ARM64_VERSION}/root.tar.xz"
-LOAD='true'
+LOAD='false'
 DRY_RUN='false'
+PUSH='false'
 
 while true; do
   case "$1" in
@@ -62,7 +63,7 @@ while true; do
         armv6) PLATFORM='linux/arm/v6' ;;
         armv7) PLATFORM='linux/arm/v7' ;;
         arm64) PLATFORM='linux/arm64' ;;
-        *) echo "Unknown '${ARCH}' variant: $2" >&2; exit 1 ;;
+        *) echo "Unknown ${ARCH} variant: '$2'" >&2; exit 1 ;;
       esac
       set_armhf_rootfs_url
       shift 2
@@ -74,6 +75,10 @@ while true; do
       ;;
     -o | --load)
       LOAD='true'
+      shift
+      ;;
+    -p | --push)
+      PUSH='true'
       shift
       ;;
     -l | --list-local-project-arch)
@@ -118,6 +123,10 @@ docker_load() {
   DOCKER_CMD+=" --load"
 }
 
+docker_push() {
+  DOCKER_CMD+=" --push"
+}
+
 docker_build_dry_run() {
   echo "$DOCKER_CMD"
 }
@@ -127,6 +136,19 @@ docker_build() {
 }
 
 main() {
+  if [[ "$PUSH" == 'true' ]]; then
+    if [[ "$LOAD" == 'true' ]]; then
+      echo "Warning: --load disabled because --push is requested" >&2
+    fi
+    LOAD='false'
+
+    if [[ "$ARCH" == "armhf" ]]; then
+      PLATFORM="linux/arm/v6,linux/arm/v7,linux/arm64"
+    fi
+
+    docker_push
+  fi
+
   if [[ "$LOAD" == 'true' ]]; then
     docker_load
   fi
