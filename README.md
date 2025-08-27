@@ -38,8 +38,9 @@ Images are published as multi-arch manifests. Use the table below to choose the 
 >
 > - Use `arm64` if your OS is 64-bit and you’re on a newer Pi.
 > - Use `armhf` for 32-bit compatibility or older boards.
-> - (**Additional Tip:** Choose the `arch-<date>` tag alias for better reproducability in
->   version control tracked projects.)
+> - (**Pro Tip:** The `arch-YYYYMMDD` tag aliases are immutable and built from the
+>   official Raspberry Pi OS Lite root filesystems published on that specific date. These
+>   will never change. Choose these to ensure reproducibility.)
 
 ## Usage
 
