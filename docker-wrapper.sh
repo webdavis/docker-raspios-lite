@@ -34,8 +34,8 @@ list_remote_system_architectures() {
   ./scripts/list-image-architectures.sh -r -s
 }
 
-SHORT_FLAGS='ah:doplLrRc'
-LONG_FLAGS='arm64,armhf:,dry-run,load,push,'
+SHORT_FLAGS='ah:HdoplLrRc'
+LONG_FLAGS='arm64,armhf:,armhf-all,dry-run,load,push,'
 LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch,'
 LONG_FLAGS+='clean'
 
@@ -74,6 +74,13 @@ while true; do
       esac
       set_armhf_rootfs_url
       shift 2
+      ;;
+    -H | --armhf-all)
+      BUILD='true'
+      ARCH='armhf'
+      ARMHF_ALL='true'
+      set_armhf_rootfs_url
+      shift
       ;;
     -d | --dry-run)
       BUILD='false'
@@ -166,7 +173,7 @@ main() {
     fi
     LOAD='false'
 
-    if [[ "$ARCH" == "armhf" ]]; then
+    if [[ "$ARMHF_ALL" == "true" ]]; then
       PLATFORM="linux/arm/v6,linux/arm/v7,linux/arm64"
     fi
 
