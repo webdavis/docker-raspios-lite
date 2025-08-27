@@ -29,6 +29,7 @@ Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
   - [Linting](#linting)
     - [Running Hadolint](#running-hadolint)
   - [Raspberry Pi OS Lite Root File System](#raspberry-pi-os-lite-root-file-system)
+  - [Justfile](#justfile)
 
 ## Supported Architectures
 
@@ -231,3 +232,33 @@ The latest root file system for Raspberry Pi OS Lite is provided as `root.tar.xz
 Pi's [official downloads archive](https://downloads.raspberrypi.com/raspios_lite_arm64/archive/).
 
 Just click on the latest version (or most recent date).
+
+### Justfile
+
+This project provides a [`justfile`](./justfile) for ease-of-use.
+
+Install it like so:
+
+```bash
+brew install just
+```
+
+[just](https://github.com/casey/just) is a handy way to run project-specific commands.
+
+For example, instead of typing in `./docker-wrapper.sh --arm64 --push`, you can simply run:
+
+```bash
+just A
+```
+
+Instead of using `docker image ls -a` to list all Docker images, you can simply run:
+
+```bash
+just c
+```
+
+And then delete them all with:
+
+```bash
+just C
+```
