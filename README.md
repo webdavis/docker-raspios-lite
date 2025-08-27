@@ -9,6 +9,21 @@
 This project builds and publishes Docker images for Raspberry Pi OS Lite on [Docker
 Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
 
+## Table of Contents
+
+- [Supported Architectures](#supported-architectures)
+- [Usage](#usage)
+  - [Docker Setup／Installation](#docker-setupinstallation)
+- [How to Work on this Project](#how-to-work-on-this-project)
+  - [Building Images Locally](#building-images-locally)
+    - [Building 64-bit (arm64) Compatible Images](#building-64-bit-arm64-compatible-images)
+    - [Building 32-bit (armhf／armel) Compatible Images](#building-32-bit-armhfarmel-compatible-images)
+  - [List Local Project Architectures](#list-local-project-architectures)
+  - [List Remote Image Architectures (Docker Hub Manifests)](#list-remote-image-architectures-docker-hub-manifests)
+  - [Linting](#linting)
+    - [Running Hadolint](#running-hadolint)
+  - [Raspberry Pi OS Lite Root File System](#raspberry-pi-os-lite-root-file-system)
+
 ## Supported Architectures
 
 Images are published as multi-arch manifests. Use the table below to choose the right tag for your device:
