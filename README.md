@@ -17,6 +17,7 @@ Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
   - [Running the Images](#running-the-images)
     - [Running ARM Containers on x86_64 Hosts (QEMU Setup)](#running-arm-containers-on-x86_64-hosts-qemu-setup)
       - [Debian/Ubuntu](#debianubuntu)
+      - [NixOS](#nixos)
       - [Fedora](#fedora)
       - [Arch Linux](#arch-linux)
 - [Dev Setup (How to Work on this Project)](#dev-setup-how-to-work-on-this-project)
@@ -91,6 +92,23 @@ Install QEMU and enable `binfmt` support via your system’s package manager:
 
 ```bash
 sudo apt install qemu-user-static binfmt-support
+```
+
+#### NixOS:
+
+Add the following to your NixOS config (`/etc/nixos/configuration.nix`):
+
+```nix
+environment.systemPackages = with pkgs; [
+  qemu_user_static
+  binfmt
+];
+```
+
+Then run the following:
+
+```bash
+sudo nixos-rebuild switch
 ```
 
 #### Fedora:
