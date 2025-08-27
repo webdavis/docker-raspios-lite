@@ -11,14 +11,20 @@ Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/general).
 
 ## Supported Architectures
 
-These images are published for multiple Raspberry Pi architectures. You can find the full list
-of tags on [Docker Hub](https://hub.docker.com/repository/docker/webdavis/raspios-lite/tags):
+Images are published as multi-arch manifests. Use the table below to choose the right tag for your device:
 
-| Docker Tag          | Architectures Included        | OS Variant     | Target Devices                                  |
-| ------------------- | ----------------------------- | -------------- | ----------------------------------------------- |
-| `arm64` or `64-bit` | `linux/arm64`                 | 64-bit         | Raspberry Pi 3, 4, 400, 5, and newer            |
-| `armhf` or `32-bit` | `linux/arm/v7`, `linux/arm64` | 32-bit (armhf) | Raspberry Pi 2, 3, 4, Zero 2, and most models   |
-| *(via `armhf`)*     | `linux/arm/v6`                | 32-bit (armel) | Raspberry Pi Zero (v1), Pi 1, and legacy boards |
+| Device Type                              | Recommended Tag | Alternative Tags (aliases)                      | Available Platforms              | Notes                             |
+| ---------------------------------------- | --------------- | ----------------------------------------------- | -------------------------------- | --------------------------------- |
+| Raspberry Pi 3, 4, 400, 5 (64-bit OS)    | `arm64`         | `arm64-<date>`,<br>`64-bit`,<br>`64-bit-<date>` | `linux/arm64`                    | Best performance on modern Pis    |
+| Raspberry Pi 2, 3, 4, Zero 2 (32-bit OS) | `armhf`         | `armhf-<date>`,<br>`32-bit`,<br>`32-bit-<date>` | `linux/arm/v7`,<br>`linux/arm64` | Default choice for 32-bit systems |
+| Raspberry Pi Zero (v1), Pi 1             | `armhf`         | `armhf-<date>`,<br>`32-bit`,<br>`32-bit-<date>` | `linux/arm/v6`                   | Legacy devices (32-bit armel)     |
+
+> \[!Tip\]
+>
+> - Use `arm64` if your OS is 64-bit and you’re on a newer Pi.
+> - Use `armhf` for 32-bit compatibility or older boards.
+> - (**Additional Tip:** Choose the `arch-<date>` tag alias for better reproducability in
+>   version control tracked projects.)
 
 ## Setup／Installation
 
@@ -34,6 +40,8 @@ brew install --cask docker-desktop
 
 Once installed, launch **Docker Desktop** to complete the setup (accepting licenses, etc.),
 before starting any builds.
+
+## How to work on this Project!
 
 ### Linting
 
