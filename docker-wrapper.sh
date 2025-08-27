@@ -149,6 +149,7 @@ main() {
     docker_push
   fi
 
+  # Local load only happens for single-platform builds.
   if [[ "$LOAD" == 'true' ]]; then
     docker_load
   fi
