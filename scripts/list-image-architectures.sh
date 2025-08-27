@@ -42,17 +42,17 @@ get_project_images() {
   echo "$images"
 }
 
-list_local_architectures() {
+list_local_platform_support() {
   local project_only="$1"
   local images="$2"
 
   local output
   if [[ "$project_only" == 'true' ]]; then
-    output="Project Image\tArchitecture\n"
-    output+="-------------\t------------\n"
+    output="Project Image\tPlatform\n"
+    output+="-------------\t--------\n"
   else
-    output="System Image\tArchitecture\n"
-    output+="------------\t------------\n"
+    output="System Image\tPlatform\n"
+    output+="------------\t--------\n"
   fi
 
   local image architecture
@@ -67,7 +67,7 @@ list_local_architectures() {
   echo -e "${output}" | column -s $'\t' -t
 }
 
-list_remote_architectures() {
+list_remote_platform_support() {
   local images="$1"
 
   local output
@@ -134,16 +134,16 @@ parse_command_line_arguments() {
   fi
 
   if [[ "$local" == 'false' && "$remote" == 'false' ]]; then
-    list_local_architectures "$project_only" "$images"
+    list_local_platform_support "$project_only" "$images"
     return
   fi
 
   if [[ "$local" == 'true' ]]; then
-    list_local_architectures "$project_only" "$images"
+    list_local_platform_support "$project_only" "$images"
   fi
 
   if [[ "$remote" == 'true' ]]; then
-    list_remote_architectures "$images"
+    list_remote_platform_support "$images"
   fi
 }
 
