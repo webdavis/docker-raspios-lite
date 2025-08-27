@@ -139,6 +139,10 @@ docker_push() {
   DOCKER_CMD+=" --push"
 }
 
+enable_provenance_attestation() {
+  DOCKER_CMD+=" --provenance=mode=max --push --attest type=sbom"
+}
+
 get_release_tag() {
   local arch="$1"
   local version=""
@@ -208,6 +212,8 @@ main() {
   if [[ "$PUSH" == 'true' ]]; then
     docker_push
   fi
+
+  enable_provenance_attestation
 
   add_image_tags
 
