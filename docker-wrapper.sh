@@ -134,7 +134,6 @@ while true; do
   esac
 done
 
-
 docker_load() {
   DOCKER_CMD+=" --load"
 }
