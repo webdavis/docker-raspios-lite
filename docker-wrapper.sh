@@ -43,6 +43,7 @@ clean() {
 }
 
 SHORT_FLAGS='ah:HdoplLrRc'
+
 LONG_FLAGS='arm64,armhf:,armhf-all,dry-run,load,push,'
 LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch,'
 LONG_FLAGS+='clean'
