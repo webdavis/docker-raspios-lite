@@ -34,6 +34,10 @@ list_remote_system_architectures() {
   ./scripts/list-image-platforms.sh -r -s
 }
 
+clean() {
+  ./scripts/clean.sh
+}
+
 SHORT_FLAGS='ah:HdoplLrRc'
 LONG_FLAGS='arm64,armhf:,armhf-all,dry-run,load,push,'
 LONG_FLAGS+='list-local-project-arch,list-remote-project-arch,list-remote-system-arch,list-local-system-arch,'
@@ -116,7 +120,7 @@ while true; do
       shift
       ;;
     -c | --clean)
-      ./scripts/clean.sh
+      clean
       exit 1
       ;;
     --)
