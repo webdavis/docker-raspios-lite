@@ -12,6 +12,12 @@ cd "$(get_project_root_directory)" || exit 1
 
 source "./.raspios-versions"
 
+# Constants.
+PROFILE='webdavis'
+OS='raspios-lite'
+REPO="${PROFILE}/${OS}"
+ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_arm64/archive/${ARM64_VERSION}/root.tar.xz"
+
 set_armhf_rootfs_url() {
   declare -g ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_armhf/archive/${ARMHF_VERSION}/root.tar.xz"
 }
@@ -45,14 +51,10 @@ LONG_FLAGS+='clean'
 OPTIONS="$(getopt -o "$SHORT_FLAGS" --long "$LONG_FLAGS" -- "$@")"
 eval set -- "$OPTIONS"
 
-# Default values.
+# Getopt values.
 BUILD='true'
 ARCH='64-bit'
 PLATFORM='linux/arm64'
-PROFILE='webdavis'
-OS='raspios-lite'
-REPO="${PROFILE}/${OS}"
-ROOTFS_URL="https://downloads.raspberrypi.com/raspios_lite_arm64/archive/${ARM64_VERSION}/root.tar.xz"
 LOAD='false'
 DRY_RUN='false'
 PUSH='false'
