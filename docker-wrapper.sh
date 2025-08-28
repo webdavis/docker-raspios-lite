@@ -2,8 +2,6 @@
 
 # Exit immediately if any command fails.
 set -e
-
-# Ensure the entire pipeline fails if any command in the pipeline fails.
 set -o pipefail
 
 get_project_root_directory() {
