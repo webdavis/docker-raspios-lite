@@ -204,8 +204,8 @@ main() {
   build_docker_cmd
 
   if [[ "$PUSH" == 'true' && "$LOAD" == 'true' ]]; then
-    echo "Warning: '--load' disabled because '--push' is requested" >&2
-    LOAD='false'
+    echo "Terminating script... both '--load' and '--push' cannot be requested" >&2
+    exit 1
   fi
 
   # Local load only happens for single-platform builds.
